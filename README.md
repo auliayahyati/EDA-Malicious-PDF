@@ -1,4 +1,3 @@
-::: {align="center"}
 # PDF MALWARE ANALYTICS
 
 ### Exploratory Data Analysis of Structural & Behavioral PDF Features
@@ -9,7 +8,7 @@
 ![Pandas](https://img.shields.io/badge/Pandas-Analysis-150458?style=flat-square&logo=pandas&logoColor=white)
 ![Status](https://img.shields.io/badge/Project-EDA%20Research-00B8D9?style=flat-square)
 ![Year](https://img.shields.io/badge/Year-2026-7657D5?style=flat-square)
-:::
+
 
 ------------------------------------------------------------------------
 
