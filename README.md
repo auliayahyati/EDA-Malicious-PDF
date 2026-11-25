@@ -1,141 +1,180 @@
-# 🔍 Exploratory Data Analysis (EDA) Karakteristik Struktural dan Perilaku File PDF untuk Klasifikasi Dokumen Berbahaya (Malicious PDF)
+::: {align="center"}
+# PDF MALWARE ANALYTICS
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas&logoColor=white)
-![Machine Learning](https://img.shields.io/badge/Task-Classification-green)
-![Status](https://img.shields.io/badge/Status-Completed-success)
+### Exploratory Data Analysis of Structural & Behavioral PDF Features
 
-## 📌 Deskripsi Proyek
+**Membaca pola. Memahami anomali. Mendukung deteksi dokumen berbahaya.**
 
-Dokumen *Portable Document Format* (PDF) merupakan salah satu format pertukaran data digital yang paling populer. Namun, kepopuleran PDF juga dimanfaatkan oleh pihak tidak bertanggung jawab untuk menyebarkan *malware* melalui penyisipan skrip JavaScript, *embedded files*, perintah *OpenAction*, serta berbagai aksi otomatis lainnya saat dokumen dibuka.
+![Python](https://img.shields.io/badge/Python-Data%20Analysis-3776AB?style=flat-square&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Analysis-150458?style=flat-square&logo=pandas&logoColor=white)
+![Status](https://img.shields.io/badge/Project-EDA%20Research-00B8D9?style=flat-square)
+![Year](https://img.shields.io/badge/Year-2026-7657D5?style=flat-square)
+:::01 --- Project Overview
+File Portable Document Format (PDF) banyak digunakan untuk bertukar
+informasi digital. Namun, struktur PDF juga dapat dimanfaatkan untuk
+menyisipkan elemen atau mekanisme yang berkaitan dengan aktivitas
+berbahaya, seperti JavaScript, OpenAction, dan Launch.
 
-Proyek ini berfokus pada **Exploratory Data Analysis (EDA)** untuk menganalisis karakteristik struktural dan perilaku dari file PDF, guna membedakan dokumen PDF normal (*benign*) dan dokumen PDF berbahaya (*malicious*). Hasil eksplorasi ini menjadi landasan utama untuk persiapan data, seleksi fitur, serta pemodelan mesin pembelajar (*machine learning classification*).
+Proyek ini menerapkan Exploratory Data Analysis (EDA) untuk
+mengeksplorasi karakteristik struktural dan perilaku dokumen PDF, serta
+mengamati perbedaan pola antara dokumen Benign dan Malicious.
 
----
+Analisis dilakukan terhadap fitur hasil ekstraksi PDF, mulai dari ukuran
+file, jumlah halaman dan objek, stream, metadata, hingga indikator
+perilaku dokumen.
+Fokus proyek: memahami data dan menemukan pola yang berpotensi
+membantu klasifikasi PDF --- bukan membangun atau mengklaim model
+deteksi malware yang sudah tervalidasi.
 
-## 👨‍💻 Identitas Peneliti & Institusi
+02 --- Research Objectives
+- Mengidentifikasi karakteristik struktural dan perilaku file PDF.
+- Membandingkan karakteristik dokumen Benign dan Malicious.
+- Mengevaluasi kualitas data, termasuk missing values, duplikasi, dan
+  outliers.
+- Menganalisis distribusi, skewness, kurtosis, serta hubungan
+  antarfitur.
+- Mengidentifikasi fitur yang berpotensi menjadi pembeda kedua kelas.
+- Menyusun rekomendasi untuk tahap klasifikasi machine learning
+  berikutnya.
+03 --- Dataset Snapshot
+  Informasi                                  Keterangan
+  Dataset                        PDF_All_features.csv
+Total data awal                    19.296 dokumen
+Total kolom awal                         42 kolom
+Benign (Label 0)                       9.297 (48,18%)
+Malicious (Label 1)                    9.999 (51,82%)
+Format                                            CSV
+Tipe analisis           Binary classification --- EDA
 
-- **Penulis:** Yahyati Aulia
-- **Dosen Pengampu:** Dr. Giat Karyono, M.Kom.
-- **Program Studi:** Magister Ilmu Komputer, Fakultas Ilmu Komputer
-- **Institusi:** Universitas Amikom Purwokerto
-- **Tahun:** 2026
+Label target
+- 0 --- Benign: dokumen PDF yang dikategorikan normal.
+- 1 --- Malicious: dokumen PDF yang dikategorikan berbahaya.
+Dataset access
+- Dataset
+  CSV
+- Raw
+  CSV
+04 --- Analytical Workflow
+Analisis disusun secara bertahap untuk menjaga alur eksplorasi data
+tetap terstruktur.
+  Tahap                               Fokus
+  Data Understanding                  Memahami sumber, struktur, dan
+karakteristik dataset
 
----
+  Data Inspection                     Memeriksa dimensi, kolom, tipe
+data, dan statistik awal
 
-## 🎯 Tujuan Utama
+  Data Quality                        Memeriksa missing values,
+duplikasi, konsistensi, dan
+outliers
 
-1. Mengidentifikasi karakteristik struktural dan perilaku file PDF berdasarkan fitur ekstraksi dataset.
-2. Menganalisis perbedaan pola antara dokumen PDF *Benign* (normal) dan *Malicious* (berbahaya).
-3. Menguji dan menganalisis kualitas data (*missing values*, duplikasi data, konsistensi nilai, dan *outliers*).
-4. Mengetahui pola distribusi serta korelasi antarfitur.
-5. Mengidentifikasi fitur potensial (*key features*) untuk membedakan PDF normal dan berbahaya.
-6. Memberikan rekomendasi metode klasifikasi serta strategi pra-pemrosesan data untuk penelitian selanjutnya.
+  Univariate Analysis                 Mengamati distribusi setiap fitur
 
----
+  Bivariate Analysis                  Membandingkan fitur berdasarkan
+label Benign dan Malicious
 
-## 📊 Ringkasan Dataset
+  Distribution Analysis               Mengevaluasi skewness dan kurtosis
 
-Dataset yang digunakan adalah `PDF_All_features.csv` yang dipublikasikan pada repositori ini.
+  Correlation Analysis                Mengidentifikasi hubungan dan
+redundansi antarfitur
 
-| Parameter | Keterangan |
-| :--- | :--- |
-| **Jumlah Baris (Data)** | 19.296 Sampel |
-| **Jumlah Kolom (Fitur)** | 42 Atribut |
-| **Tipe Data** | Integer (39), Float (2), Object (1) |
-| **Distribusi Kelas Target** | **Benign (0):** 9.297 sampel (48,18%)<br>**Malicious (1):** 9.999 sampel (51,82%) |
-| **Missing Values** | 0 (0%) |
-| **Data Duplikat** | 0 (0%) |
+  Data Transformation                 Membersihkan fitur tidak informatif
+dan menerapkan transformasi
+Recommendations                     Menyusun arahan untuk pengembangan
+model klasifikasi
+05 --- Key Findings
+Berikut ringkasan temuan utama dari eksplorasi dataset dalam laporan.
+Data quality
+- Tidak ditemukan missing values pada 42 kolom.
+- Tidak ditemukan baris duplikat.
+- Tidak ditemukan nilai numerik negatif pada pemeriksaan yang
+  dilakukan.
+- Ditemukan nilai ekstrem pada beberapa fitur, sehingga outliers perlu
+  dipahami sebagai kemungkinan karakteristik dokumen, bukan otomatis
+  dianggap sebagai kesalahan data.
+Structural & behavioral patterns
+- Dokumen Malicious memiliki rata-rata javascript_count lebih tinggi
+  daripada Benign pada analisis awal: 0,3992 dibandingkan 0,2035.
+- Persentase kemunculan javascript_count juga lebih tinggi pada
+  Malicious: 15,65% dibandingkan 3,61%.
+- openaction_count dan launch_count menunjukkan persentase
+  kemunculan yang lebih tinggi pada Malicious.
+- uri_count justru lebih sering muncul pada Benign dalam dataset
+  ini. Karena itu, keberadaan URI tidak dapat dipakai sebagai
+  satu-satunya indikator dokumen berbahaya.
+- embedded_file_count bernilai nol pada seluruh data awal.
+Distribution & correlation
+- Sebanyak 27 dari 28 fitur numerik non-biner memiliki kemencengan
+  tinggi (|skewness| > 0,5).
+- Sejumlah fitur memperlihatkan nilai skewness dan kurtosis yang
+  sangat tinggi, mengindikasikan distribusi tidak merata dan nilai
+  ekstrem.
+- Ditemukan korelasi sangat tinggi pada beberapa pasangan fitur,
+  antara lain stream_count dengan endstream_count (korelasi
+  Spearman 1,0000) serta javascript_count dengan
+  has_multiple_behavioral_keywords_in_one_object (0,9819).
+Data preparation
+Dalam tahap transformasi, kolom file_path dan delapan fitur
+zero-variance dihapus karena tidak memberikan informasi pembeda. Dataset
+kerja kemudian memiliki 19.296 baris dan 33 kolom, terdiri dari 32
+fitur prediktor dan satu target label.
 
-### Pengelompokan Fitur Utama:
-1. **Atribut Identifikasi:** `file_path`
-2. **Atribut Struktural:** `file_size`, `page_count`, `object_count`, `stream_count`, `entropy_of_streams`, `font_object_count`, `image_count`, `text_length`, `metadata_size`, dll.
-3. **Atribut Perilaku:** `js_count`, `javascript_count`, `uri_count`, `openaction_count`, `launch_count`, `embedded_file_count`, dll.
+Transformasi log1p diterapkan pada fitur numerik yang memiliki
+kemencengan tinggi untuk membantu mengurangi skewness sekaligus
+mengakomodasi nilai nol.
+06 --- Technology Stack
+  Tools / Library   Penggunaan
+  Python            Bahasa pemrograman analisis
+Google Colab      Lingkungan eksekusi notebook
+Pandas            Membaca dan mengolah dataset
+NumPy             Operasi numerik dan transformasi
+Matplotlib        Visualisasi data
+Seaborn           Visualisasi statistik
+07 --- Project Resources
+  Resource                            Link
+  GitHub Repository                   EDA-Malicious-PDF
 
----
+  Dataset CSV                         PDF_All_features.csv
+Google Colab                        Open Notebook
+08 --- Next Research Direction
+Hasil EDA menjadi dasar untuk pengembangan model klasifikasi pada tahap
+berikutnya.
 
-## 💡 Temuan Utama Hasil Eksplorasi (EDA Insights)
+Rekomendasi dari laporan:
+1. Model utama: algoritma ensemble berbasis pohon seperti Random
+   Forest, XGBoost, atau LightGBM karena lebih sesuai untuk data dengan
+   outliers, distribusi skewed, dan hubungan fitur yang kompleks.
+2. Model pembanding: Support Vector Machine (SVM) kernel RBF dengan
+   data yang telah ditransformasi dan diskalakan.
+3. Feature engineering: mempertimbangkan fitur objects_per_page,
+   has_javascript, dan file_size_category.
+4. Feature selection: mengevaluasi fitur yang sangat berkorelasi
+   agar informasi redundan dapat dikurangi.
+5. Evaluation: memprioritaskan Recall dan F1-Score untuk kelas
+   Malicious, selain Accuracy, guna mengurangi risiko dokumen berbahaya
+   terprediksi sebagai aman.
+Proporsi kelas pada dataset relatif seimbang (48,18% Benign dan 51,82%
+Malicious), sehingga oversampling seperti SMOTE belum menjadi kebutuhan
+awal berdasarkan distribusi kelas tersebut.
+09 --- Research Limitations
+Analisis ini menggunakan fitur hasil ekstraksi statis. Dataset tidak
+menyediakan timestamp pembuatan file maupun konteks semantik dari
+payload skrip. Dengan demikian, analisis belum dapat menjelaskan
+perubahan teknik serangan dari waktu ke waktu atau memastikan apakah
+suatu JavaScript digunakan untuk tujuan sah maupun berbahaya.
 
-### 1. Kualitas Data (Data Quality)
-- **Kelengkapan Data:** Tidak ditemukan *missing values* (0 dari 810.432 sel terisi lengkap).
-- **Keunikan Data:** 0% data duplikat identik.
-- **Konsistensi Nilai:** 0 nilai negatif pada fitur numerik. Fitur biner (`encrypted`, `valid_pdf_header`, `uses_nonstandard_port`, `used_ocr`, `label`) memiliki kategori nilai yang valid (0 dan 1).
+Hasil EDA menunjukkan pola dan asosiasi dalam dataset, tetapi tidak
+dengan sendirinya membuktikan sebab-akibat atau menjamin kemampuan
+deteksi pada file PDF baru. Validasi melalui pemodelan dan pengujian
+terpisah tetap diperlukan.
+10 --- Research Identity
+Author: Yahyati Aulia
+Program: Informatika --- Fakultas Ilmu Komputer
+Institution: Universitas Amikom Purwokerto
+Year: 2026
+Lecturer: Dr. Giat Karyono, M.Kom.
+::: {align="center"}
+**EXPLORE THE STRUCTURE. UNDERSTAND THE SIGNAL.**
 
-### 2. Fitur Tanpa Variasi (Constant / Zero-Variance Features)
-Ditemukan 8 fitur yang bernilai 0 di seluruh data (tidak memiliki variasi nilai):
-- `embedded_file_count`, `average_embedded_file_size`, `xref_count`, `xref_entries`, `submitform_count`, `jbig2decode_count`, `trailer_count`, `startxref_count`.
-> **Rekomendasi:** Fitur-fitur ini direkomendasikan untuk dihapus pada tahap *feature selection* sebelum pelatihan model klasifikasi.
-
-### 3. Perbedaan Karakteristik Benign vs Malicious
-
-| Fitur / Karakteristik | PDF Benign (0) | PDF Malicious (1) | Analisis & Implikasi |
-| :--- | :--- | :--- | :--- |
-| **Ukuran File (`file_size`)** | Rata-rata **123,79 KB** (Median: 76,53 KB) | Rata-rata **22,51 KB** (Median: 9,68 KB) | PDF Malicious cenderung berukuran jauh lebih kecil dibanding PDF Benign. |
-| **Jumlah Halaman (`page_count`)** | Rata-rata **6,19 halaman** (Median: 2) | Rata-rata **0,48 halaman** (Median: 0) | PDF Malicious umumnya tidak fokus pada isi dokumen (halaman sedikit/0). |
-| **Jumlah Objek (`object_count`)** | Rata-rata **280,19** (Median: 71) | Rata-rata **261,02** (Median: 0, ada pencilan 200.000) | Distribusi sangat *skewed* ke kanan dengan *outlier* ekstrem pada kategori Malicious. |
-| **JavaScript (`javascript_count`)** | Ditemukan pada **3,61%** dokumen | Ditemukan pada **15,65%** dokumen | Keberadaan skrip JavaScript jauh lebih dominan pada dokumen Malicious. |
-| **Elemen JS (`js_count`)** | Ditemukan pada **4,51%** dokumen | Ditemukan pada **15,62%** dokumen | Berpola sejalan dengan `javascript_count`. |
-| **Aksi Otomatis (`openaction_count`)** | Persentase **7,31%** (Mean: 0,0786) | Persentase **9,91%** (Mean: 0,0992) | Lebih banyak ditemukan pada dokumen Malicious untuk eksekusi skrip otomatis. |
-| **Tautan Web (`uri_count`)** | Rata-rata **2,8381** (Kemunculan: **14,18%**) | Rata-rata **0,0399** (Kemunculan: **0,26%**) | Dokumen Benign justru lebih sering menyertakan alamat tautan/URI resmi. |
-
----
-
-## 🛠️ Stack & Library yang Digunakan
-
-- **Bahasa Pemrograman:** Python 3.x
-- **Platform:** Google Colab / Jupyter Notebook
-- **Library Pengolahan Data:** `pandas`, `numpy`
-- **Library Visualisasi Data:** `matplotlib`, `seaborn`
-
----
-
-## 🚀 Cara Menjalankan Program
-
-### 1. Clone Repositori
-```bash
-git clone https://github.com/auliayahyati/EDA-Malicious-PDF.git
-cd EDA-Malicious-PDF
-```
-
-### 2. Instalasi Dependensi
-```bash
-pip install pandas numpy matplotlib seaborn
-```
-
-### 3. Eksekusi Script Python / Colab
-Anda dapat langsung membaca dataset secara online dari raw GitHub menggunakan kode berikut:
-
-```python
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# URL Dataset
-url = "https://raw.githubusercontent.com/auliayahyati/EDA-Malicious-PDF/main/dataset/PDF_All_features.csv"
-
-# Load Dataset
-df = pd.read_csv(url)
-
-# Inspeksi Dimensi
-print(f"Dimensi Dataset: {df.shape}")
-print(df.info())
-```
-
----
-
-## 📈 Rekomendasi Tahap Selanjutnya (Machine Learning Roadmap)
-
-1. **Preprocessing & Feature Selection:**
-   - Menghapus kolom identifikasi (`file_path`) dan 8 kolom ber-variansi nol.
-   - Melakukan transformasi *logarithmic* atau *scaling* pada fitur yang sangat menceng (*skewed*) seperti `file_size` dan `object_count`.
-2. **Model Klasifikasi:**
-   - Menggunakan algoritma berbasis pohon seperti **Random Forest**, **XGBoost**, atau **LightGBM** yang tahan terhadap nilai *outlier* dan *skewed distribution*.
-3. **Metrik Evaluasi:**
-   - Fokus utama pada **Recall** dan **F1-Score** untuk meminimalkan *False Negative* (dokumen berbahaya yang lolos terdeteksi sebagai dokumen normal).
-
----
-
-## 📄 Lisensi & Hak Cipta
-
-Proyek ini disusun untuk memenuhi tugas akademik pada Program Studi Magister Ilmu Komputer Universitas Amikom Purwokerto. Bebas digunakan dan dikembangkan kembali untuk kepentingan edukasi dan penelitian riset sejenis.
+*An Exploratory Data Analysis project on malicious PDF characteristics.*
+:::
