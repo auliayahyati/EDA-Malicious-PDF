@@ -12,6 +12,7 @@
 * **Dosen Pengampu:** Dr. Giat Karyono, M.Kom.
 * **Program Studi:** Magister Ilmu Komputer, Fakultas Ilmu Komputer
 * **Institusi:** Universitas Amikom Purwokerto (2026)
+* **Dataset:** CIC_Trap4Phish_2025_Dataset dari UNB https://www.unb.ca/cic/datasets/trap4phish2025.html
 
 ---
 
